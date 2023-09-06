@@ -2,7 +2,7 @@ let statements = []; // Array til at gemme påstande
 
 function loadStatements() {
   return new Promise((resolve, reject) => {
-    fetch('/statements.json')
+    fetch('/public/statements.json')
       .then((response) => response.json())
       .then((data) => {
         statements = data.statements;
