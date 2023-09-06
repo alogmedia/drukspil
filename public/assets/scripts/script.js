@@ -70,5 +70,57 @@ loadStatements()
     console.error('Fejl ved indlæsning af JSON-fil:', error);
   });
 
+  // Funktion til at læse cookien med navnet "points"
+  function getPointsFromCookie() {
+    const name = "points=";
+    const decodedCookie = decodeURIComponent(document.cookie);
+    const cookieArray = decodedCookie.split(';');
+    for (let i = 0; i < cookieArray.length; i++) {
+      let cookie = cookieArray[i];
+      while (cookie.charAt(0) === ' ') {
+        cookie = cookie.substring(1);
+      }
+      if (cookie.indexOf(name) === 0) {
+        return parseInt(cookie.substring(name.length), 10);
+      }
+    }
+    return 0; // Returner 0 point, hvis cookien ikke findes
+  }
+
+  // Funktion til at opdatere pointene og gemme dem i en cookie
+  function updatePoints(points) {
+    document.getElementById('points').textContent = `Point: ${points}`;
+    document.cookie = `points=${points}`;
+  }
+
+  // Kald funktionen for at indlæse eksisterende point og opdatere visningen
+  let currentPoints = getPointsFromCookie();
+  updatePoints(currentPoints);
+
+  // Eventlistener for "Næste" knappen
+  const nextButton = document.getElementById('next');
+  nextButton.addEventListener('click', () => {
+    currentPoints++;
+    updatePoints(currentPoints);
+  });
+
+  // Eventlistener for "Tilføj påstand" knappen
+  const addButton = document.getElementById('add');
+  addButton.addEventListener('click', () => {
+    if (currentPoints >= 10) {
+      // Hvis brugeren har nok point, træk 10 point og tilføj påstanden
+      currentPoints -= 10;
+      updatePoints(currentPoints);
+
+      // Her kan du tilføje logikken for at tilføje en ny påstand
+    } else {
+      // Hvis brugeren ikke har nok point, vis en besked eller udfør en handling
+      alert('Du har ikke nok point til at tilføje en påstand.');
+    }
+  });
+
+// Resten af din eksisterende kode...
+
+
 // Kald loadStatements-funktionen, når siden indlæses
 window.addEventListener('load', loadStatements);
