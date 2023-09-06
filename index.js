@@ -21,7 +21,7 @@ app.post('/add-statement', (req, res) => {
   }
 
   // Opret den fulde sti til statements.json-filen
-  const filePath = path.join(__dirname, '/public/statements.json');
+  const filePath = path.join(__dirname, 'public/statements.json');
 
   try {
     // Læs eksisterende påstande fra filen
