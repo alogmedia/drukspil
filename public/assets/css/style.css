@@ -1,0 +1,116 @@
+/* Reset default margin and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Apply a background color and set text color */
+  body {
+    background-color: #ecf0f1; /* Light gray background */
+    color: #333; /* Dark gray text color */
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-image: url(/public/assets/images/background.jpg);
+  }
+  
+  /* Style the main heading */
+  h1 {
+    background-color: #00454e; /* Blue background */
+    color: #fff; /* White text color */
+    padding: 10px;
+  }
+  
+  /* Style the game container */
+  #game {
+    background-color: #fff; /* White background */
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 400px;
+  }
+  
+  /* Style the statement text */
+  #statement {
+    font-size: 18px;
+    margin-bottom: 20px;
+    margin-top: 5px;
+  }
+  
+  /* Style the "Next" button */
+  #next {
+    background-color: #2ecc71; /* Green background */
+    color: #fff; /* White text color */
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+
+  
+  /* Responsive design for smaller screens */
+  @media screen and (max-width: 600px) {
+    /* Center align text */
+    body {
+      text-align: center;
+    }
+  
+    /* Reduce padding and font size for smaller screens */
+    #game, #addStatement {
+      padding: 10px;
+      margin: 10px auto;
+    }
+  
+    h1 {
+      padding: 5px;
+      font-size: 24px;
+    }
+  
+    #statement {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+  
+    #next, #add {
+      padding: 5px 10px;
+      font-size: 14px;
+    }
+  }
+  
+  .centercontainer {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: 100vh; /* 100% viewport height */
+  }
+  
+  #addStatementForm {
+    width: 50%;
+    border-radius: 10px;
+    margin: 20px auto;
+    max-width: 400px;
+  }
+  
+  #add {
+    margin-top: 10px;
+    background-color: #e74c3c; /* Red background */
+    color: #fff; /* White text color */
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+   /* Style the "Add Statement" container */
+   #centercontainer {
+    background-color: #fff; /* White background */
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 400px;
+  }
+
+  
