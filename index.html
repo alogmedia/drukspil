@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" type="text/css" href="public/assets/css/style.css" />
+  <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
   <title>Jeg har aldrig!</title>
 </head>
 <body>
@@ -12,7 +12,6 @@
     <h2>Jeg har aldrig?</h2>
     <p id="statement"></p>
     <button id="next">Næste</button>
-    <div id="points">Points: 0</div>
   </div>
   <div id="centercontainer">
     <h2>Tilføj en ny påstand:</h2>
@@ -21,6 +20,37 @@
       <button type="button" id="add">Tilføj påstand</button>
     </form>
   </div>
-  <script src="public/assets/scripts/script.js"></script>
+<!-- Login form -->
+<form id="loginForm">
+  <div class="input-container">
+    <input type="text" id="loginUsername" placeholder="Brugernavn" />
+  </div>
+  <div class="input-container">
+    <input type="password" id="loginPassword" placeholder="Adgangskode" />
+  </div>
+  <div class="button-container">
+    <button type="submit">Log ind</button>
+  </div>
+</form>
+  <!-- Registreringsformular -->
+<form id="registerForm">
+  <div class="input-container">
+    <input type="text" id="registerUsername" placeholder="Brugernavn" />
+  </div>
+  <div class="input-container">
+    <input type="password" id="registerPassword" placeholder="Adgangskode" />
+  </div>
+  <div class="button-container">
+    <button type="submit">Registrer</button>
+  </div>
+</form>
+<div id="pointsDisplay" class="points-container">
+  <span id="points">0</span>
+</div>
+
+      <!-- Log ud knap -->
+  <button id="logoutButton">Log ud</button>
+  
+  <script src="assets/scripts/script.js"></script>
 </body>
 </html>

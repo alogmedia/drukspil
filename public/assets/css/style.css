@@ -1,118 +1,239 @@
 /* Reset default margin and padding */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  /* Apply a background color and set text color */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Apply a background color and set text color */
+body {
+  background-color: #ecf0f1; /* Light gray background */
+  color: #333; /* Dark gray text color */
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background-image: url(/assets/images/background.jpg);
+}
+
+/* Style the main heading */
+h1 {
+  background-color: #00454e; /* Blue background */
+  color: #fff; /* White text color */
+  padding: 10px;
+}
+
+/* Style the game container */
+#game {
+  background-color: #fff; /* White background */
+  border-radius: 10px;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 400px;
+}
+
+/* Style the statement text */
+#statement {
+  font-size: 18px;
+  margin-bottom: 20px;
+  margin-top: 5px;
+}
+
+/* Style the "Next" button */
+#next {
+  background-color: #2ecc71; /* Green background */
+  color: #fff; /* White text color */
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
+
+/* Responsive design for smaller screens */
+@media screen and (max-width: 600px) {
+  /* Center align text */
   body {
-    background-color: #ecf0f1; /* Light gray background */
-    color: #333; /* Dark gray text color */
-    font-family: Arial, sans-serif;
     text-align: center;
-    background-image: url(/public/assets/images/background.jpg);
   }
-  
-  /* Style the main heading */
-  h1 {
-    background-color: #00454e; /* Blue background */
-    color: #fff; /* White text color */
+
+  /* Reduce padding and font size for smaller screens */
+  #game, #addStatement {
     padding: 10px;
+    margin: 10px auto;
   }
-  
-  /* Style the game container */
-  #game {
-    background-color: #fff; /* White background */
-    border-radius: 10px;
-    padding: 20px;
-    margin: 20px auto;
-    max-width: 400px;
+
+  h1 {
+    padding: 5px;
+    font-size: 24px;
   }
-  
-  /* Style the statement text */
+
   #statement {
-    font-size: 18px;
-    margin-bottom: 20px;
-    margin-top: 5px;
-  }
-  
-  /* Style the "Next" button */
-  #next {
-    background-color: #2ecc71; /* Green background */
-    color: #fff; /* White text color */
-    border: none;
-    padding: 10px 20px;
     font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-
-  
-  /* Responsive design for smaller screens */
-  @media screen and (max-width: 600px) {
-    /* Center align text */
-    body {
-      text-align: center;
-    }
-  
-    /* Reduce padding and font size for smaller screens */
-    #game, #addStatement {
-      padding: 10px;
-      margin: 10px auto;
-    }
-  
-    h1 {
-      padding: 5px;
-      font-size: 24px;
-    }
-  
-    #statement {
-      font-size: 16px;
-      margin-bottom: 10px;
-    }
-  
-    #next, #add {
-      padding: 5px 10px;
-      font-size: 14px;
-    }
-  }
-  
-  .centercontainer {
-    display: flex;
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-    height: 100vh; /* 100% viewport height */
-  }
-  
-  #addStatementForm {
-    width: 50%;
-    border-radius: 10px;
-    margin: 20px auto;
-    max-width: 400px;
-  }
-  
-  #add {
-    margin-top: 10px;
-    background-color: #e74c3c; /* Red background */
-    color: #fff; /* White text color */
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
+    margin-bottom: 10px;
   }
 
-   /* Style the "Add Statement" container */
-   #centercontainer {
-    background-color: #fff; /* White background */
-    border-radius: 10px;
-    padding: 20px;
-    margin: 20px auto;
-    max-width: 400px;
+  #next, #add {
+    padding: 5px 10px;
+    font-size: 14px;
   }
+}
 
-  #points {
-    margin-top: 10px;
-  }
+.centercontainer {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  height: 100vh; /* 100% viewport height */
+}
+
+#addStatementForm {
+  width: 50%;
+  border-radius: 10px;
+  margin: 20px auto;
+  max-width: 400px;
+}
+
+#add {
+  margin-top: 10px;
+  background-color: #e74c3c; /* Red background */
+  color: #fff; /* White text color */
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+ /* Style the "Add Statement" container */
+ #centercontainer {
+  background-color: #fff; /* White background */
+  border-radius: 10px;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 400px;
+}
+
+#points {
+  margin-top: 10px;
+}
+
+#pointsDisplay {
+  display:none;
+}
+
+/* Tilføj styling til login- og registreringsknapper */
+form button {
+background-color: #3498db; /* Blue background */
+color: #fff; /* White text color */
+border: none;
+padding: 10px 20px;
+font-size: 16px;
+border-radius: 5px;
+cursor: pointer;
+margin-top: 10px; /* Tilføj en margin øverst for at adskille knapperne */
+}
+
+/* Style logud-knappen */
+#logoutButton {
+background-color: #e74c3c; /* Red background */
+color: #fff; /* White text color */
+border: none;
+padding: 10px 20px;
+font-size: 16px;
+border-radius: 5px;
+cursor: pointer;
+margin: 20px auto; /* Centrer knappen ved at tilføje en margin på toppen og bunden */
+display: block; /* Gør knappen til en blok, så den centreres korrekt */
+width: 150px; /* Juster bredden efter behov */
+}
+
+/* Responsive design for mindre skærme */
+@media screen and (max-width: 600px) {
+/* Tilpas knapstil til mindre skærme */
+form button {
+  padding: 5px 10px;
+  font-size: 14px;
+}
+
+/* Tilpas logud-knapstil til mindre skærme */
+#logoutButton {
+  padding: 5px 10px;
+  font-size: 14px;
+}
+}
+
+
+/* Tilføj styling til inputfelter og knapper */
+.input-container {
+margin-bottom: 15px;
+position: relative;
+}
+
+input {
+width: 25%;
+padding: 10px;
+border: 1px solid #ccc;
+border-radius: 5px;
+font-size: 16px;
+}
+
+button[type="submit"] {
+background-color: #3498db; /* Blue background */
+color: #fff; /* White text color */
+border: none;
+padding: 10px 20px;
+font-size: 16px;
+border-radius: 5px;
+cursor: pointer;
+width: 15%;
+transition: background-color 0.3s ease;
+margin-bottom:10px;
+}
+
+button[type="submit"]:hover {
+background-color: #2980b9; /* Darker blue background on hover */
+}
+
+/* Responsive design for mindre skærme */
+@media screen and (max-width: 600px) {
+/* Tilpas inputfelter og knapper til mindre skærme */
+.input-container {
+  margin-bottom: 10px;
+}
+
+input {
+  font-size: 14px;
+}
+
+button[type="submit"] {
+  padding: 8px 16px;
+  font-size: 14px;
+}
+}
+
+#newStatement {
+width:85%;
+}
+
+/* Tilpasning af points-container */
+.points-container {
+background-color: #3498db; /* Blue background */
+color: #fff; /* White text color */
+border-radius: 5px;
+padding: 10px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+max-width: 200px;
+margin: 0 auto;
+}
+
+.points-container p {
+margin: 0;
+font-size: 16px;
+}
+
+#pointsValue {
+font-size: 24px;
+font-weight: bold;
+}
