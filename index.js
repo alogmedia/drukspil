@@ -71,7 +71,8 @@ app.post('/register', (req, res) => {
       return res.status(500).json({ error: 'Error hashing password' });
     }
 
-    usersData[username] = { password: hashedPassword };
+    // Initialize user data with 0 points
+    usersData[username] = { password: hashedPassword, points: 0 };
     saveUsersData();
 
     return res.status(201).json({ message: 'User registered successfully' });
@@ -96,10 +97,13 @@ app.post('/login', (req, res) => {
       return res.status(401).json({ error: 'Invalid username or password' });
     }
 
-    // Gem brugeroplysninger i session
+    // Set user data in session
     req.session.user = username;
 
-    // Opret en cookie for at indikere, at brugeren er logget ind
+    // Set points in session
+    req.session.points = userData.points;
+
+    // Set isLoggedIn cookie to true
     res.cookie('isLoggedIn', 'true');
 
     // Authentication successful
@@ -108,11 +112,11 @@ app.post('/login', (req, res) => {
 });
 
 app.post('/logout', (req, res) => {
-  // Fjern brugerens session eller nulstil den som passende (afhænger af din sessionhåndtering)
+  // Destroy the user's session (log out)
   req.session.destroy((err) => {
     if (err) {
-      console.error('Fejl ved log ud:', err);
-      return res.status(500).json({ error: 'Fejl ved log ud' });
+      console.error('Error during logout:', err);
+      return res.status(500).json({ error: 'Error during logout' });
     }
     return res.status(200).json({ message: 'Logout successful' });
   });
@@ -146,6 +150,46 @@ app.post('/add-statement', (req, res) => {
     return res.status(500).json({ error: 'Intern serverfejl' });
   }
 });
+
+app.get('/get-points', (req, res) => {
+  // Check if the user is authenticated (you can use a middleware for this)
+  if (!req.session.user) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+
+  // Retrieve points from the JSON file based on the user
+  const userData = usersData[req.session.user];
+
+  if (!userData) {
+    return res.status(500).json({ error: 'User data not found' });
+  }
+
+  const points = userData.points || 0;
+
+  return res.status(200).json({ points });
+});
+
+app.post('/update-points', (req, res) => {
+  const { points } = req.body;
+
+  // Check if the user is authenticated (you can use a middleware for this)
+  if (!req.session.user) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+
+  // Update the user's points in the session
+  req.session.points = points;
+
+  // Update the points in the usersData object
+  const userData = usersData[req.session.user];
+  if (userData) {
+    userData.points = points;
+    saveUsersData(); // Save the updated user data to the users.json file
+  }
+
+  return res.status(200).json({ message: 'Points updated successfully' });
+});
+
 
 app.listen(port, () => {
   console.log(`Serveren kører på port ${port}`);

@@ -1,7 +1,12 @@
 let statements = []; // Array til at gemme påstande
 
+// Function to update and display user points
+function updatePoints(points) {
+  document.getElementById('pointsDisplay').textContent = `Points: ${points}`;
+}
+
 // Når siden indlæses
-window.addEventListener('load', () => {
+window.addEventListener('load', async () => {
   // Tjek om brugeren er logget ind ved at se efter cookien
   const isLoggedIn = document.cookie.includes('isLoggedIn=true');
   
@@ -15,6 +20,20 @@ window.addEventListener('load', () => {
 
     // Vis log ud knappen
     document.getElementById('logoutButton').style.display = 'block';
+
+    // Fetch user points and update the UI
+    try {
+      const response = await fetch('/get-points'); // Add a new endpoint in your server to fetch user points
+      if (response.ok) {
+        const data = await response.json();
+        const userPoints = data.points;
+        updatePoints(userPoints);
+      } else {
+        console.error('Error fetching user points:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error fetching user points:', error);
+    }
   } else {
     // Brugeren er ikke logget ind, vis registrerings- og login-formularerne
     document.getElementById('loginForm').style.display = 'block';
@@ -52,61 +71,79 @@ loadStatements().then(() => {
 
   // Set the initial statement when the page loads
   statementElement.textContent = statements[currentStatementIndex];
-    // Resten af din kode...
 
-    // Funktion til at læse cookien med navnet "points"
-    function getPointsFromCookie() {
-      const name = "pointsDisplay=";
-      const decodedCookie = decodeURIComponent(document.cookie);
-      const cookieArray = decodedCookie.split(';');
-      for (let i = 0; i < cookieArray.length; i++) {
-        let cookie = cookieArray[i];
-        while (cookie.charAt(0) === ' ') {
-          cookie = cookie.substring(1);
-        }
-        if (cookie.indexOf(name) === 0) {
-          return parseInt(cookie.substring(name.length), 10);
-        }
+  // Funktion til at læse cookien med navnet "points"
+  function getPointsFromCookie() {
+    const name = "pointsDisplay=";
+    const decodedCookie = decodeURIComponent(document.cookie);
+    const cookieArray = decodedCookie.split(';');
+    for (let i = 0; i < cookieArray.length; i++) {
+      let cookie = cookieArray[i];
+      while (cookie.charAt(0) === ' ') {
+        cookie = cookie.substring(1);
       }
-      return 0; // Returner 0 point, hvis cookien ikke findes
-    }
-
-    // Funktion til at opdatere pointene og gemme dem i en cookie
-    function updatePoints(points) {
-      document.getElementById('pointsDisplay').textContent = `Points: ${points}`;
-      document.cookie = `pointsDisplay=${points}`;
-    }
-
-    // Kald funktionen for at indlæse eksisterende point og opdatere visningen
-    let currentPoints = getPointsFromCookie();
-    updatePoints(currentPoints);
-
-    // Eventlistener for "Næste" knappen
-    const nextButton = document.getElementById('next');
-    let isNextButtonEnabled = true;
-
-    nextButton.addEventListener('click', () => {
-      if (isNextButtonEnabled) {
-        currentStatementIndex++;
-        if (currentStatementIndex >= statements.length) {
-          currentStatementIndex = 0; // Wrap around to the first statement
-        }
-        statementElement.textContent = statements[currentStatementIndex];
-
-        // Update the points when "Næste" is clicked
-        currentPoints++;
-        updatePoints(currentPoints);
-        // Deaktiver knappen i et stykke tid (f.eks. 2 sekunder)
-        nextButton.disabled = true;
-        isNextButtonEnabled = false;
-        setTimeout(() => {
-          nextButton.disabled = false;
-          isNextButtonEnabled = true;
-        }, 2000); // 2 sekunder
+      if (cookie.indexOf(name) === 0) {
+        return parseInt(cookie.substring(name.length), 10);
       }
+    }
+    return 0; // Returner 0 point, hvis cookien ikke findes
+  }
+
+  // Function to update and display user points
+async function updatePoints(points) {
+  try {
+    // Send a POST request to update the points on the server
+    const response = await fetch('/update-points', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ points }),
     });
 
-    // Her kan du tilføje logikken for at tilføje en ny påstand
+    if (response.ok) {
+      // Points updated successfully on the server
+      document.getElementById('pointsDisplay').textContent = `Points: ${points}`;
+    } else {
+      console.error('Error updating points:', response.statusText);
+    }
+  } catch (error) {
+    console.error('Error updating points:', error);
+  }
+}
+
+
+  // Kald funktionen for at indlæse eksisterende point og opdatere visningen
+  let currentPoints = getPointsFromCookie();
+  updatePoints(currentPoints);
+
+  // Eventlistener for "Næste" knappen
+  const nextButton = document.getElementById('next');
+  let isNextButtonEnabled = true;
+
+  nextButton.addEventListener('click', () => {
+    if (isNextButtonEnabled) {
+      currentStatementIndex++;
+      if (currentStatementIndex >= statements.length) {
+        currentStatementIndex = 0; // Wrap around to the first statement
+      }
+      statementElement.textContent = statements[currentStatementIndex];
+
+      // Update the points when "Næste" is clicked
+      currentPoints++;
+      updatePoints(currentPoints);
+      // Deaktiver knappen i et stykke tid (f.eks. 2 sekunder)
+      nextButton.disabled = true;
+      isNextButtonEnabled = false;
+      setTimeout(() => {
+        nextButton.disabled = false;
+        isNextButtonEnabled = true;
+      }, 2000); // 2 sekunder
+    }
+  });
+
+  // Her kan du tilføje logikken for at tilføje en ny påstand
+  addButton.addEventListener('click', () => {
     const newStatement = newStatementInput.value;
     if (newStatement.trim() !== '') {
       statements.push(newStatement);
@@ -134,11 +171,11 @@ loadStatements().then(() => {
           console.error('Fejl ved POST-anmodning:', error);
         });
     }
-  })
-  .catch((error) => {
-    // Handle error here if needed
-    console.error('Error loading statements:', error);
   });
+}).catch((error) => {
+  // Handle error here if needed
+  console.error('Error loading statements:', error);
+});
 
 // Resten af din kode...
 
@@ -175,6 +212,7 @@ logoutButton.addEventListener('click', () => {
 });
 
 // Event listener for the login form submission
+const loginForm = document.getElementById('loginForm');
 loginForm.addEventListener('submit', async (event) => {
   event.preventDefault(); // Prevent the default form submission behavior
 
@@ -196,7 +234,7 @@ loginForm.addEventListener('submit', async (event) => {
       // Authentication successful, update the UI as needed
       // For example, you can hide the login form and show user-specific content
       console.log('Login successful');
-        // Brugeren er logget ind, skjul registrerings- og login-formularerne
+      // Brugeren er logget ind, skjul registrerings- og login-formularerne
       document.getElementById('loginForm').style.display = 'none';
       document.getElementById('registerForm').style.display = 'none';
 
@@ -215,6 +253,7 @@ loginForm.addEventListener('submit', async (event) => {
 });
 
 // Event listener for the registration form submission
+const registerForm = document.getElementById('registerForm');
 registerForm.addEventListener('submit', async (event) => {
   event.preventDefault(); // Prevent the default form submission behavior
 
@@ -236,7 +275,7 @@ registerForm.addEventListener('submit', async (event) => {
       // Registration successful, update the UI as needed
       // For example, you can hide the registration form and show user-specific content
       console.log('Registration successful');
-      alert("Du har registreret en konto og du kan nu logge ind!")
+      alert("Du har registreret en konto, og du kan nu logge ind!");
     } else {
       // Registration failed, show an error message or handle it accordingly
       console.error('Registration failed');
