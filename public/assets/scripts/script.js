@@ -196,6 +196,15 @@ loginForm.addEventListener('submit', async (event) => {
       // Authentication successful, update the UI as needed
       // For example, you can hide the login form and show user-specific content
       console.log('Login successful');
+        // Brugeren er logget ind, skjul registrerings- og login-formularerne
+      document.getElementById('loginForm').style.display = 'none';
+      document.getElementById('registerForm').style.display = 'none';
+
+      // Vis brugerens points eller andre relevante oplysninger
+      document.getElementById('pointsDisplay').style.display = 'block';
+
+      // Vis log ud knappen
+      document.getElementById('logoutButton').style.display = 'block';
     } else {
       // Authentication failed, show an error message or handle it accordingly
       console.error('Login failed');
